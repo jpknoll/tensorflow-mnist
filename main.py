@@ -126,7 +126,7 @@ def image():
     #request.stream.seek(0, 0)
 
     file = request.files['file']
-    filename = secure_filename(file.filename)
+    filename = secure_filename(request.form['filename'])
     filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(filename)
 
