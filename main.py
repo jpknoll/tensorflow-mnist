@@ -1,4 +1,6 @@
 import os
+import sys
+import logging
 import numpy as np
 import tensorflow as tf
 from flask import Flask, jsonify, render_template, request
@@ -84,6 +86,9 @@ def load_labels(label_file):
 # webapp
 app = Flask(__name__)
 
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.INFO)
+
 UPLOAD_FOLDER = './upload'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -114,7 +119,7 @@ def mnist():
 
 @app.route('/api/image', methods=['POST'])
 def image():
-    print(request.content_type)
+    app.logger.info(request.content_type)
     file = request.files['file']
     filename = secure_filename(file.filename)
     filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
