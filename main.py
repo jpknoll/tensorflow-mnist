@@ -120,6 +120,10 @@ def mnist():
 @app.route('/api/image', methods=['POST'])
 def image():
     app.logger.info(request.content_type)
+    app.logger.info(request.content_length)
+    app.logger.info(request.max_content_length)
+    app.logger.info(request.data)
+
     file = request.files['file']
     filename = secure_filename(file.filename)
     filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
