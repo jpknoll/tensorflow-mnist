@@ -119,10 +119,11 @@ def mnist():
 
 @app.route('/api/image', methods=['POST'])
 def image():
-    app.logger.info(request.content_type)
-    app.logger.info(request.content_length)
-    app.logger.info(request.max_content_length)
-    app.logger.info(request.stream.read())
+    #app.logger.info(request.content_type)
+    #app.logger.info(request.content_length)
+    #app.logger.info(request.max_content_length)
+    #app.logger.info(request.stream.read(1024 * 1024))
+    #request.stream.seek(0, 0)
 
     file = request.files['file']
     filename = secure_filename(file.filename)
