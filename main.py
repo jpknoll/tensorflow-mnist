@@ -122,7 +122,7 @@ def image():
     app.logger.info(request.content_type)
     app.logger.info(request.content_length)
     app.logger.info(request.max_content_length)
-    app.logger.info(request.data)
+    app.logger.info(request.stream.read())
 
     file = request.files['file']
     filename = secure_filename(file.filename)
