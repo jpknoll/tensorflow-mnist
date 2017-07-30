@@ -119,12 +119,6 @@ def mnist():
 
 @app.route('/api/image', methods=['POST'])
 def image():
-    #app.logger.info(request.content_type)
-    #app.logger.info(request.content_length)
-    #app.logger.info(request.max_content_length)
-    #app.logger.info(request.stream.read(1024 * 1024))
-    #request.stream.seek(0, 0)
-
     file = request.files['file']
     filename = secure_filename(request.form['filename'])
     filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -134,14 +128,14 @@ def image():
     with tf.Session(graph=graph) as sess:
         results = sess.run(output_operation.outputs[0],
                            {input_operation.outputs[0]: t})
-        #results = np.squeeze(results)
 
         results = results.flatten().tolist()
-        #top_k = results.argsort()[-5:][::-1]
 
         data = []
         for i in range(len(results)):
             data.append({'label': labels[i], 'value': results[i]})
+
+        data = sorted(data, key=lambda s: s['value'], reverse=True)
 
         return jsonify(data)
 
